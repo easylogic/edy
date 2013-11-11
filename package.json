@@ -9,7 +9,7 @@
   "bin": {
     "edy": "./bin/edy"
   },
-  "repository": "",
+  "repository": "https://github.com/easylogic/edy.git",
   "keywords": [
     "easy",
     "deploy"
