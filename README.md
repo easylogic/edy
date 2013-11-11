@@ -14,14 +14,22 @@ var edy = require('edy');
 // send local_path to remote_path
 edy.run({
 	source : '/home/test',
-	target : 'ftp://id:pw@host.com/test
+	target : 'ftp://id:pw@host.com/test'
 }, {
 	done : function(type, protocol, err, info) {
-		console.log(log);
+		console.log(info);
 	}
 })
 
 ```
+
+# Events
+
+## done 
+## step
+## start
+## end
+## mkdir
 
 # Command Line
 
