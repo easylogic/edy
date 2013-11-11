@@ -1,6 +1,6 @@
 {
   "name": "edy",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "easy-deploy library & cli",
   "main": "index.js",
   "scripts": {
@@ -25,7 +25,6 @@
     "ssh2": "~0.2.12",
     "mkdirp": "~0.3.5",
     "rsync": "~0.1.0",
-    "scp": "0.0.3",
     "scp2": "~0.1.3",
     "tar.gz": "~0.1.1",
     "easy-zip": "0.0.4",
