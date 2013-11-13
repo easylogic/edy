@@ -4,6 +4,10 @@ var program = require('commander');
 var package = JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
 var edy = require(__dirname + '/../index.js');
 
+function list(val) {
+    return val.split(",");
+}
+
 program
 	.version(package.version)
 	.option('-s, --source <file or directory>', 'Source(http, svn, git, ftp, local) File or Directory')
@@ -12,8 +16,10 @@ program
 	.option('-t, --target <file or directory>', 'Target(ftp, scp, rsync, local) File or Directory')
 	.option('-e, --exec <remote or local command>', 'Remote Execute') 
 	.option('-v, --verbose', 'wheather log view')
+	.option('--sync', 'sync')
+	.option('--exclude <items>', 'exclude', list)
 	.parse(process.argv);
-	
+
 if (program.args.length == 1) {	
 	var source = program.args[0];
 } else if (program.args.length == 2) {
@@ -32,7 +38,9 @@ edy.run({
 	protocol 	: program.protocol, 
 	target 	: target || program.target || null, 
 	verbose : program.verbose,
-	exec : program.exec
+	exec : program.exec,
+  sync : program.sync,
+  exclude : program.exclude
 }, {
 
 	data : function(type, protocol, err, data) {
