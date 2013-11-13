@@ -95,6 +95,23 @@ edy.run({
 ### scp
 ```edy /home/dir/files scp://host.com/root/sub/```
 
+## Copy
+
+### local
+```edy /home/dir/files /home/dir/samples```
+
+## Sync (delete if target's file or directoy not exists) 
+
+### ftp 
+```edy --sync ftp://id:password@host.com/root/sub /home/dir/files ```
+```edy --sync /home/dir/files ftp://id:password@host.com/root/sub/```
+
+### sftp 
+```edy --sync sftp://id:password@host.com/root/sub /home/dir/files ```
+```edy --sync /home/dir/files sftp://id:password@host.com/root/sub/```
+
+### local
+```edy --sync /home/dir/files /home/dir/samples```
 
 ## Remote command 
 ```edy -e "cd test; ./start.sh" ssh://id:password@host.com```
