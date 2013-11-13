@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+var package = JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
+var edy = require(__dirname + '/../index.js');
+
+function list(val) {
+    return val.split(",");
+}
+
+program
+	.version(package.version)
+	.option('-s, --source <file or directory>', 'Source(http, svn, git, ftp, local) File or Directory')
+	.option('-r, --root <root directory>', 'Root Directory of Source')
+	.option('-p, --protocol <protocol>', 'Source Protocol (ftp, svn, git)')
+	.option('-t, --target <file or directory>', 'Target(ftp, scp, rsync, local) File or Directory')
+	.option('-e, --exec <remote or local command>', 'Remote Execute') 
+	.option('-v, --verbose', 'wheather log view')
+	.option('--sync', 'sync')
+	.option('--exclude <items>', 'exclude', list)
+	.parse(process.argv);
+
+if (program.args.length == 1) {	
+	var source = program.args[0];
+} else if (program.args.length == 2) {
+	var source = program.args[0];
+	var target = program.args[1];
+}	else if (program.args.length == 3) {
+	var source = program.args[0];
+	var root = program.args[1];
+	var target = program.args[2];
+}
+
+// start edy 
+edy.run({ 
+	source 	: source || program.source || null, 
+	root 		: root || program.root || null, 
+	protocol 	: program.protocol, 
+	target 	: target || program.target || null, 
+	verbose : program.verbose,
+	exec : program.exec,
+  sync : true,
+  exclude : program.exclude
+}, {
+
+	data : function(type, protocol, err, data) {
+		//console.log('data %s %s %j', type, protocol, data);
+	},
+	step : function(type, protocol, err, data) {
+		console.log('step %s %s %j', type, protocol, data);
+	},
+
+	mkdir : function(protocol, type, err, info) {
+		console.log('mkdir %s %s %j', type, protocol, info);
+	},
+
+	start : function(protocol, type, err, info) {
+		console.log('start %s %s %j', type, protocol, info);
+	},
+	
+	end : function(protocol, type, err, info) {
+		console.log('end %s %s %s', type, protocol, info);
+	},
+
+	done : function(protocol, type, err, info) {
+		console.log('done %s %s %j', type, protocol);
+	}
+})
