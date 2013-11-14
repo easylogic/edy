@@ -52,6 +52,13 @@ edy.run({
 
 ```edy svn://id:password@svn.com/project/trunk /home/dir/project```
 
+### dropbox(using phantomjs) 
+
+```edy dropbox://email-id:password:api-key:api-secret@email-host/project /home/dir/project```
+
+
+connect string : dropbox://easylogic:xxxx:xxxxx:xxxx@github.com 
+
 ### ftp 
 
 ```edy ftp://id:password@host.com/project /home/dir/project``` 
@@ -83,6 +90,10 @@ edy.run({
 
 ## Upload 
 
+### dropbox(using phantomjs) 
+
+```edy /home/dir/project dropbox://email-id:password:api-key:api-secret@email-host/project ```
+
 ### ftp  
 ```edy /home/dir/files ftp://id:password@host.com/root/sub/```
 
@@ -101,6 +112,12 @@ edy.run({
 ```edy /home/dir/files /home/dir/samples```
 
 ## Sync (delete if target's file or directoy not exists) 
+
+### dropbox(using phantomjs) 
+
+```edy --sync /home/dir/project dropbox://email-id:password:api-key:api-secret@email-host/project ```
+```edy --sync dropbox://email-id:password:api-key:api-secret@email-host/project /home/dir/project ```
+
 
 ### ftp 
 ```edy --sync ftp://id:password@host.com/root/sub /home/dir/files ```
