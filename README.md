@@ -133,6 +133,11 @@ connect string : dropbox://easylogic:xxxx:xxxxx:xxxx@github.com
 ## Remote command 
 ```edy -e "cd test; ./start.sh" ssh://id:password@host.com```
 
+## Composite
+
+```edy ftp://id:password@host.com/project sftp://id:password@host.com/project2```
+
+```edy --sync ftp://id:password@host.com/project sftp://id:password@host.com/project2```
 
 # License
 
