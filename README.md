@@ -61,12 +61,15 @@ connect string : dropbox://easylogic:xxxx:xxxxx:xxxx@github.com
 
 ### ftp 
 
-```edy ftp://id:password@host.com/project /home/dir/project``` 
+```edy ftp://id:password@host.com/project /home/dir/project```
+ 
+```edy ftp://id:password@host.com/project/file.js /home/dir/project``` 
 
 ### sftp 
 
 ```edy sftp://id:password@host.com/project /home/dir/project```
 
+```edy sftp://id:password@host.com/project/file.js /home/dir/project```
 ### scp 
 
 ```edy scp://id:password@host.com/project/test.txt /home/dir/project```

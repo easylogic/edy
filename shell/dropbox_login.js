@@ -14,12 +14,12 @@ page.onConsoleMessage = function(msg) {
 
 page.onLoadStarted = function() {
   loadInProgress = true;
-  console.log("load started");
+  //console.log("load started");
 };
 
 page.onLoadFinished = function() {
   loadInProgress = false;
-  console.log("load finished");
+  //console.log("load finished");
 };
 
 var steps = [
@@ -58,7 +58,7 @@ var steps = [
   },
   
   function() {
-    console.log(document.getElementsByTagName('html')[0].outerHTML)
+    //console.log(document.getElementsByTagName('html')[0].outerHTML)
   }
 ];
 
