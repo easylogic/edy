@@ -33,7 +33,7 @@ edy.run({
 
 # Command Line
 
-## Download 
+# Download 
 
 ### git (clone)
 
@@ -91,7 +91,7 @@ connect string : dropbox://easylogic:xxxx:xxxxx:xxxx@github.com
 ```edy zip:///home/projects/edy.zip /home/projects/edy```
 
 
-## Upload 
+# Upload 
 
 ### dropbox(using phantomjs) 
 
@@ -109,7 +109,7 @@ connect string : dropbox://easylogic:xxxx:xxxxx:xxxx@github.com
 ### scp
 ```edy /home/dir/files scp://host.com/root/sub/```
 
-## Copy
+# Copy
 
 ### local
 ```edy /home/dir/files /home/dir/samples```
@@ -133,10 +133,10 @@ connect string : dropbox://easylogic:xxxx:xxxxx:xxxx@github.com
 ### local
 ```edy --sync /home/dir/files /home/dir/samples```
 
-## Remote command 
+# Remote command 
 ```edy -e "cd test; ./start.sh" ssh://id:password@host.com```
 
-## Composite
+# Composite
 
 ```edy ftp://id:password@host.com/project sftp://id:password@host.com/project2```
 
