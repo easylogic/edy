@@ -17,6 +17,7 @@ program
 	.option('-e, --exec <remote or local command>', 'Remote Execute') 
 	.option('-v, --verbose', 'wheather log view')
 	.option('--sync', 'sync')
+	.option('--include <items>', 'include', list)
 	.option('--exclude <items>', 'exclude', list)
 	.parse(process.argv);
 
@@ -31,8 +32,11 @@ if (program.args.length == 1) {
 	var target = program.args[2];
 }
 
+console.log(program);
+process.exit(0);
+
 // start edy 
-edy.run({ 
+var obj = edy.run({ 
 	source 	: source || program.source || null, 
 	root 		: root || program.root || null, 
 	protocol 	: program.protocol, 
@@ -40,29 +44,12 @@ edy.run({
 	verbose : program.verbose,
 	exec : program.exec,
   sync : true,
-  exclude : program.exclude
-}, {
+  exclude : program.exclude,
+  start : false
+});
 
-	data : function(type, protocol, err, data) {
-		//console.log('data %s %s %j', type, protocol, data);
-	},
-	step : function(type, protocol, err, data) {
-		console.log('step %s %s %j', type, protocol, data);
-	},
-
-	mkdir : function(protocol, type, err, info) {
-		console.log('mkdir %s %s %j', type, protocol, info);
-	},
-
-	start : function(protocol, type, err, info) {
-		console.log('start %s %s %j', type, protocol, info);
-	},
-	
-	end : function(protocol, type, err, info) {
-		console.log('end %s %s %s', type, protocol, info);
-	},
-
-	done : function(protocol, type, err, info) {
-		console.log('done %s %s %j', type, protocol);
-	}
+obj.on('done', function (protocol, type, err, info) {
+	console.log('done %s %s %j', type, protocol);
 })
+
+obj.delivery();

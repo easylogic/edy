@@ -3,6 +3,7 @@
 var program = require('commander');
 var package = JSON.parse(require('fs').readFileSync(__dirname + '/../package.json'));
 var edy = require(__dirname + '/../index.js');
+var command = {};
 
 function list(val) {
     return val.split(",");
@@ -17,22 +18,88 @@ program
 	.option('-e, --exec <remote or local command>', 'Remote Execute') 
 	.option('-v, --verbose', 'wheather log view')
 	.option('--sync', 'sync')
+	.option('--include <items>', 'include', list)	
 	.option('--exclude <items>', 'exclude', list)
-	.parse(process.argv);
+	
+program
+  .command('list')
+  .description('project list')
+  .action(function(){
+		command = { type : "list" };		
+  });
+  
+program
+  .command('add [id]')
+  .description('project add')
+  .action(function(id){
+		command = { 
+			type : "add", 
+			options : { 
+				id : id 
+			}  
+		};
+  });	 
+  
+program
+  .command('update [id] [attr] [value]')
+  .description('project delete')
+  .action(function(id, attr, value){
+		command = { 
+			type : "update", 
+			options : { 
+				id : id, 
+				attr : attr, 
+				value : value 
+			}  
+		};
+  });
+  
+program
+  .command('delete [id] [attr]')
+  .description('project delete')
+  .action(function(id, attr){
+		command = { 
+			type : "delete", 
+			options : { 
+				id : id, 
+				attr : attr 
+			}  
+		};
+  });	  	  	  	
 
-if (program.args.length == 1) {	
+program
+  .command('view [id]')
+  .description('project delete')
+  .action(function(id){
+		command = { 
+			type : "view", 
+			options : { 
+				id : id 
+			}  
+		};
+  });	  	  	  	
+	
+program.parse(process.argv);
+
+//console.log(program);
+
+var count = program.args.length;
+var repl = false;
+
+if (count == 0) {
+	repl = true;
+} else if (count == 1) {	
 	var source = program.args[0];
-} else if (program.args.length == 2) {
+} else if (count == 2) {
 	var source = program.args[0];
 	var target = program.args[1];
-}	else if (program.args.length == 3) {
+}	else if (count == 3) {
 	var source = program.args[0];
 	var root = program.args[1];
 	var target = program.args[2];
 }
 
-// start edy 
-edy.run({ 
+var opt = { 
 	source 	: source || program.source || null, 
 	root 		: root || program.root || null, 
 	protocol 	: program.protocol, 
@@ -40,29 +107,27 @@ edy.run({
 	verbose : program.verbose,
 	exec : program.exec,
   sync : program.sync,
-  exclude : program.exclude
-}, {
+  include : program.include,
+  exclude : program.exclude,
+  repl : repl,
+  command : command , 
+  start : false
+}
 
-	data : function(type, protocol, err, data) {
-		//console.log('data %s %s %j', type, protocol, data);
-	},
-	step : function(type, protocol, err, data) {
-		console.log('step %s %s %j', type, protocol, data);
-	},
+//console.log(program);
+//process.exit(0);
 
-	mkdir : function(protocol, type, err, info) {
-		console.log('mkdir %s %s %j', type, protocol, info);
-	},
+// start edy 
+var obj = edy.run(opt);
 
-	start : function(protocol, type, err, info) {
-		console.log('start %s %s %j', type, protocol, info);
-	},
-	
-	end : function(protocol, type, err, info) {
-		console.log('end %s %s %s', type, protocol, info);
-	},
+if (!opt.repl) {
 
-	done : function(protocol, type, err, info) {
-		console.log('done %s %s %j', type, protocol);
-	}
+obj.on('end', function (protocol, type, err, info) {
+	console.log('end %s %s %j', type, protocol, info);
 })
+obj.on('done', function (protocol, type, err, info) {
+	console.log('done %s %s %j', type, protocol);
+})
+
+obj.delivery();
+}

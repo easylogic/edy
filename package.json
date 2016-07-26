@@ -13,7 +13,16 @@
   "repository": "https://github.com/easylogic/edy.git",
   "keywords": [
     "easy",
-    "deploy"
+    "deploy",
+    "sftp",
+    "ssh",
+    "scp",
+    "ftp",
+    "rsync",
+    "local",
+    "copy",
+    "svn",
+    "git"
   ],
   "author": "easylogic",
   "license": "MIT",
@@ -35,6 +44,8 @@
     "rimraf": "~2.2.2",
     "wrench": "~1.5.4",
     "dropbox": "~0.10.2",
-    "phantom": "~0.5.4"
+    "phantom": "~0.5.4",
+    "cli-table": "~0.2.0",
+    "minimatch": "~0.2.12"
   }
 }
